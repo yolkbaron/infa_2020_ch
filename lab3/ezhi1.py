@@ -2,72 +2,79 @@ import pygame
 from pygame.draw import *
 from random import *
 
+
+def place_mushroom(surface, pos, scale=1.0, angle=0):
+    mushroom = pygame.Surface((1000, 1000), pygame.SRCALPHA)
+    ellipse(mushroom, WHITE, (400, 200, 200, 600))
+    ellipse(mushroom, RED, (200, 100, 600, 200))
+    ellipse(mushroom, WHITE, (400, 200, 100, 50))
+    ellipse(mushroom, WHITE, (320, 130, 100, 50))
+    ellipse(mushroom, WHITE, (600, 150, 100, 50))
+    mushroom = pygame.transform.rotozoom(mushroom, angle, scale / 10)
+    surface.blit(mushroom, pos)
+
+
+def place_hedgehog(surface, pos, scale=1.0):
+    hedgehog = pygame.Surface((3200, 3600), pygame.SRCALPHA)
+    ellipse(hedgehog, PURPULE, (100, 600, 1500, 800))  # body
+    ellipse(hedgehog, PURPULE, (1400, 1200, 300, 200))  # front leg
+    ellipse(hedgehog, PURPULE, (200, 1200, 300, 200))  # back right leg
+    ellipse(hedgehog, PURPULE, (100, 1100, 250, 150))  # back left leg
+    ellipse(hedgehog, PURPULE, (1700, 900, 400, 300))  # head
+    ellipse(hedgehog, BLACK, (1800, 1000, 100, 50))  # eye
+    spine = pygame.Surface((80, 800), pygame.SRCALPHA)
+    polygon(spine, LIGHT_BLACK, ((40, 0), (0, 400), (80, 400)))
+    polygon(spine, BLACK, ((40, 0), (0, 400), (80, 400)), 10)
+    for i in range(100):
+        if i == 70:
+            ellipse(hedgehog, ORANGE, (200, 500, 400, 400))
+            ellipse(hedgehog, RED, (1200, 500, 400, 400))
+            place_mushroom(hedgehog, (200, 0), 10, -20)
+        turn = randint(-40, 40)
+        x = randint(100, 1200)
+        y = randint(0, 600)
+        hedgehog.blit(pygame.transform.rotate(spine, turn), (x, y))
+    hedgehog = pygame.transform.rotozoom(hedgehog, 0, scale/10)
+    surface.blit(hedgehog, pos)
+
+
+SEA_GREEN = (0, 164, 113)
+TEAL = (68, 119, 135)
+YELLOW = (255, 236, 0)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+PURPULE = (77, 0, 69)
+ORANGE = (255, 176, 0)
+LIGHT_BLACK = (20, 20, 20)
+
 pygame.init()
 FPS = 60
-sc = pygame.display.set_mode((600, 700))
+screen = pygame.display.set_mode((600, 700))
 
-#background
+# background
 sky = pygame.Surface((600, 700))
-sky.fill((0, 164, 113))
+sky.fill(SEA_GREEN)
 ground = pygame.Surface((600, 250))
-ground.fill((68, 119, 135))
-sc.blit(sky, (0, 0))
-sc.blit(ground, (0, 450))
+ground.fill(TEAL)
+screen.blit(sky, (0, 0))
+screen.blit(ground, (0, 450))
 
-#trees
-rect(sc, (255, 236, 0), (0, 0, 45, 520), 0)
-rect(sc, (255, 236, 0), (80, 0, 135, 680), 0)
-rect(sc, (255, 236, 0), (450, 0, 45, 520), 0)
-rect(sc, (255, 236, 0), (560, 0, 30, 580), 0)
+# trees
+rect(screen, YELLOW, (0, 0, 45, 520), 0)
+rect(screen, YELLOW, (80, 0, 135, 680), 0)
+rect(screen, YELLOW, (450, 0, 45, 520), 0)
+rect(screen, YELLOW, (560, 0, 30, 580), 0)
 
-#fly agaric
-mh = pygame.Surface((100, 100), pygame.SRCALPHA)
-ellipse(mh, (255, 255, 255), (40, 20, 20, 60))
-ellipse(mh, (255, 0, 0), (20, 10, 60, 20))
-ellipse(mh, (255, 255, 255), (40, 20, 10, 5))
-ellipse(mh, (255, 255, 255), (32, 13, 10, 5))
-ellipse(mh, (255, 255, 255), (60, 15, 10, 5))
-minimh = pygame.transform.scale(mh, (mh.get_width()//2, mh.get_height()//2))
-sc.blit(pygame.transform.rotate(minimh, 0), (450, 675))
-sc.blit(pygame.transform.rotate(minimh, 15), (380, 665))
-sc.blit(pygame.transform.rotate(mh, 20), (460, 630))
-sc.blit(pygame.transform.rotate(mh, -10), (390, 630))
+# mushrooms in the right bottom corner
+mushrooms = [((450, 675), 0.5, 0), ((380, 665), 0.5, 15), ((460, 640), 1, 20), ((390, 630), 1, -10)]
+for mushroom in mushrooms:
+    place_mushroom(screen, *mushroom)
 
-#ej
-ej = pygame.Surface((400, 400), pygame.SRCALPHA)
-ellipse(ej, (77, 0, 69), (100, 100, 150, 80))
-ellipse(ej, (77, 0, 69), (220, 160, 30, 20))
-ellipse(ej, (77, 0, 69), (100, 160, 30, 20))
-ellipse(ej, (77, 0, 69), (90, 150, 25, 15))
-ellipse(ej, (77, 0, 69), (240, 130, 40, 30))
-ellipse(ej, (0, 0, 0), (260, 140, 10, 5))
-sc.blit(ej, (200, 200))
-miniej = pygame.transform.scale(ej, (ej.get_width()//2, ej.get_height()//2))
-sc.blit(miniej, (-40, 600))
-
-#igles
-ig = pygame.Surface((8, 30), pygame.SRCALPHA)
-polygon(ig, (0, 0, 0), ((4, 0), (0, 30), (8, 30)))
-for i in range(150):
-    if i == 110:
-        ellipse(sc, (255, 176, 0), (320, 300, 30, 40))
-        ellipse(sc, (255, 0, 0), (400, 290, 30, 40))
-        sc.blit(pygame.transform.rotate(mh, -20), (310, 250))
-    turn = randint(-40, 40)
-    x = randint(300, 420)
-    y = randint(280, 340)
-    sc.blit(pygame.transform.rotate(ig, turn), (x, y))
-for i in range(75):
-    if i == 110:
-        ellipse(sc, (255, 176, 0), (100, 500, 15, 20))
-        ellipse(sc, (255, 0, 0), (400, 290, 15, 20))
-        sc.blit(pygame.transform.rotate(mh, -20), (310, 250))
-    turn = randint(-40, 40)
-    x = randint(300, 420)
-    y = randint(280, 340)
-    sc.blit(pygame.transform.rotate(ig, turn), (x, y))
-
-
+# hedgehogs with mushrooms
+hedgehogs = [((50, 500), 0.5), ((350, 400), 1)]
+for hedgehog in hedgehogs:
+    place_hedgehog(screen, *hedgehog)
 
 pygame.display.update()
 clock = pygame.time.Clock()

@@ -10,7 +10,7 @@ def place_mushroom(surface, pos, scale=1.0, angle=0):
     :param pos: coordinates of top left corner of the mushroom
     :param scale: size of the mushroom
     :param angle: angle of mushroom rotation
-    :return: surface with mushroom
+    :return:
     """
     mushroom = pygame.Surface((1000, 1000), pygame.SRCALPHA)
     ellipse(mushroom, WHITE, (400, 200, 200, 600))
@@ -28,7 +28,7 @@ def place_hedgehog(surface, pos, scale=1.0):
     :param surface: surface where to draw this hedgehog
     :param pos: coordinates of top left corner of the hedgehog
     :param scale: size of the hedgehog
-    :return: surface with hedgehog
+    :return:
     """
     hedgehog = pygame.Surface((3200, 3600), pygame.SRCALPHA)
     ellipse(hedgehog, PURPULE, (100, 600, 1500, 800))  # body

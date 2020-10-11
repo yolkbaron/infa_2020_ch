@@ -6,6 +6,7 @@ from random import *
 def place_mushroom(surface, pos, scale=1.0, angle=0):
     """
     draws a mushroom
+    pos is a list of 2 numbers, coordinates of top left corner
     """
     mushroom = pygame.Surface((1000, 1000), pygame.SRCALPHA)
     ellipse(mushroom, WHITE, (400, 200, 200, 600))
@@ -20,6 +21,7 @@ def place_mushroom(surface, pos, scale=1.0, angle=0):
 def place_hedgehog(surface, pos, scale=1.0):
     """
     draws hedgehog
+    pos is a list of 2 numbers, coordinates of top left corner
     """
     hedgehog = pygame.Surface((3200, 3600), pygame.SRCALPHA)
     ellipse(hedgehog, PURPULE, (100, 600, 1500, 800))  # body

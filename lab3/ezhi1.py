@@ -4,6 +4,14 @@ from random import *
 
 
 def place_mushroom(surface, pos, scale=1.0, angle=0):
+    """
+    draws a mushroom
+    :param surface: surface where to draw this mushroom
+    :param pos: coordinates of top left corner of the mushroom
+    :param scale: size of the mushroom
+    :param angle: angle of mushroom rotation
+    :return: surface with mushroom
+    """
     mushroom = pygame.Surface((1000, 1000), pygame.SRCALPHA)
     ellipse(mushroom, WHITE, (400, 200, 200, 600))
     ellipse(mushroom, RED, (200, 100, 600, 200))
@@ -15,6 +23,13 @@ def place_mushroom(surface, pos, scale=1.0, angle=0):
 
 
 def place_hedgehog(surface, pos, scale=1.0):
+    """
+    draws a hedgehog
+    :param surface: surface where to draw this hedgehog
+    :param pos: coordinates of top left corner of the hedgehog
+    :param scale: size of the hedgehog
+    :return: surface with hedgehog
+    """
     hedgehog = pygame.Surface((3200, 3600), pygame.SRCALPHA)
     ellipse(hedgehog, PURPULE, (100, 600, 1500, 800))  # body
     ellipse(hedgehog, PURPULE, (1400, 1200, 300, 200))  # front leg

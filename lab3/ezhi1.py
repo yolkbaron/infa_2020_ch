@@ -3,6 +3,48 @@ from pygame.draw import *
 from random import *
 
 
+def main():
+    pygame.init()
+    FPS = 60
+    screen = pygame.display.set_mode((600, 700))
+
+    # background
+    sky = pygame.Surface((600, 700))
+    sky.fill(SEA_GREEN)
+    ground = pygame.Surface((600, 250))
+    ground.fill(TEAL)
+    screen.blit(sky, (0, 0))
+    screen.blit(ground, (0, 450))
+
+    # trees
+    rect(screen, YELLOW, (0, 0, 45, 520), 0)
+    rect(screen, YELLOW, (80, 0, 135, 680), 0)
+    rect(screen, YELLOW, (450, 0, 45, 520), 0)
+    rect(screen, YELLOW, (560, 0, 30, 580), 0)
+
+    # mushrooms in the right bottom corner
+    mushrooms = [((450, 675), 0.5, 0), ((380, 665), 0.5, 15), ((460, 640), 1, 20), ((390, 630), 1, -10)]
+    for mushroom in mushrooms:
+        place_mushroom(screen, *mushroom)
+
+    # hedgehogs with mushrooms
+    hedgehogs = [((50, 500), 0.5), ((350, 400), 1)]
+    for hedgehog in hedgehogs:
+        place_hedgehog(screen, *hedgehog)
+
+    pygame.display.update()
+    clock = pygame.time.Clock()
+    finished = False
+
+    while not finished:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                finished = True
+
+    pygame.quit()
+
+
 def place_mushroom(surface, pos, scale=1.0, angle=0):
     """
     draws a mushroom
@@ -63,42 +105,5 @@ PURPULE = (77, 0, 69)
 ORANGE = (255, 176, 0)
 LIGHT_BLACK = (20, 20, 20)
 
-pygame.init()
-FPS = 60
-screen = pygame.display.set_mode((600, 700))
 
-# background
-sky = pygame.Surface((600, 700))
-sky.fill(SEA_GREEN)
-ground = pygame.Surface((600, 250))
-ground.fill(TEAL)
-screen.blit(sky, (0, 0))
-screen.blit(ground, (0, 450))
-
-# trees
-rect(screen, YELLOW, (0, 0, 45, 520), 0)
-rect(screen, YELLOW, (80, 0, 135, 680), 0)
-rect(screen, YELLOW, (450, 0, 45, 520), 0)
-rect(screen, YELLOW, (560, 0, 30, 580), 0)
-
-# mushrooms in the right bottom corner
-mushrooms = [((450, 675), 0.5, 0), ((380, 665), 0.5, 15), ((460, 640), 1, 20), ((390, 630), 1, -10)]
-for mushroom in mushrooms:
-    place_mushroom(screen, *mushroom)
-
-# hedgehogs with mushrooms
-hedgehogs = [((50, 500), 0.5), ((350, 400), 1)]
-for hedgehog in hedgehogs:
-    place_hedgehog(screen, *hedgehog)
-
-pygame.display.update()
-clock = pygame.time.Clock()
-finished = False
-
-while not finished:
-    clock.tick(FPS)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-
-pygame.quit()
+main()
